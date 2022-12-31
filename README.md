@@ -1,4 +1,4 @@
 # datastructuredb
 
->practicing and centralizing data structures between my different devices.
->the repo is written in c.
+>Practicing and centralizing data structures between my different devices.
+>The repo is written in c.
