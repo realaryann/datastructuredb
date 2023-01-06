@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct stack
+{
+    int size;
+    int top;
+    int *s;
+};
+
+void push(struct stack *Stack, int value);
+int peek(struct stack Stack);
+int pop(struct stack *Stack);
+void display(struct stack Stack);
+void isFull(struct stack Stack);
+void isEmpty(struct stack Stack);
+
+int main(int argc, char* argv[])
+{
+    int ask;
+    struct stack Stack;
+    printf("\n\n********* Welcome to Menu Driven Stack Implemented in C *********\n");
+    printf("Enter size of the stack: ");
+    scanf("%d",&Stack.size);
+    Stack.s=(int*)malloc(sizeof(int)*Stack.size);
+    Stack.top=-1;
+    printf("[1] for Push\n");
+    printf("[2] for Pop\n");
+    printf("[3] for Peek\n");
+    printf("[4] for Display\n");
+    printf("[5] for IsEmpty\n");
+    printf("[6] for isFull\n");
+    printf("[7] for Close Program\n");
+    printf("Enter your choice: ");
+    scanf("%d",&ask);
+    while (ask != 7)
+    {
+        if (ask == 1)
+        {
+            int val;
+            printf("Enter Element to Push: ");
+            scanf("%d",&val);
+            push(&Stack,val);
+        }
+        else if (ask == 2)
+        {
+            printf("%d\n",pop(&Stack));
+        }
+        else if (ask == 3)
+        {
+            printf("%d\n",peek(Stack));
+        }
+        else if(ask == 4)
+        {
+            display(Stack);
+        }
+        else if(ask == 5)
+        {
+            isEmpty(Stack);
+        }
+        else if(ask == 6)
+        {
+            isFull(Stack);
+        }
+        printf("Enter your choice: ");
+        scanf("%d",&ask);
+    }
+
+    return 0;
+}
+void isEmpty(struct stack Stack)
+{
+    if (Stack.top==-1)
+    {
+        printf("The Stack is Empty\n");
+    }
+    else
+    {
+        printf("The Stack is not Empty\n");
+    }
+}
+void isFull(struct stack Stack)
+{
+    if (Stack.top == Stack.size-1)
+    {
+        printf("The Stack is Full\n");
+    }
+    else
+    {
+        printf("The Stack is not Full\n");
+    }
+}
+void display(struct stack Stack)
+{
+    if (Stack.top == -1)
+    {
+        printf("Stack Underflow\n");
+    }
+    else
+    {
+        int i;
+        for(i=Stack.top; i>=0; i--)
+        {
+            printf("%d\n",Stack.s[i]);
+        }
+    }
+}
+int pop(struct stack *Stack)
+{
+    int x = -1;
+    if (Stack->top != -1)
+    {
+        x = Stack->s[Stack->top];
+        Stack->top--;
+    }
+    return x;
+}
+
+int peek(struct stack Stack)
+{
+    int x = -1;
+    if (Stack.top != -1)
+    {
+        x=Stack.s[Stack.top];
+    }
+    return x;
+}
+
+void push(struct stack *Stack, int value)
+{
+    if (Stack->top==Stack->size-1)
+    {
+        printf("Stack overflow\n");
+    }
+    else
+    {
+        Stack->top++;
+        Stack->s[Stack->top]=value;
+    }
+}
+
