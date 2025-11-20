@@ -8,10 +8,13 @@ class Vector {
         int capacity;
     public:
         Vector();
-        // Rule of 3
+        // Rule of 5
         Vector(const Vector<T> &vec);
         ~Vector();
         Vector<T>& operator=(const Vector<T> &vec);
+        Vector(Vector<T> &&vec);
+        Vector<T>& operator=(Vector<T> &&vec);
+
         int Size() const;
         int Capacity() const;
         void Append(const T val);
@@ -21,6 +24,26 @@ class Vector {
         template<class U>
         friend std::ostream& operator<<(std::ostream& out, const Vector<U>& vec);
 };
+
+template<class T>
+Vector<T>::Vector(Vector<T> &&vec) {
+    size = vec.size;
+    capacity = vec.capacity;
+    data = vec.data;
+    vec.data = nullptr;
+}
+
+template<class T>
+Vector<T>& Vector<T>::operator=(Vector<T> &&vec) {
+    if (this != vec) {
+        delete[] this->data;
+        this->size = vec.size;
+        this->capacity = vec.capacity;
+        this->data = vec.data;
+        vec.data = nullptr;
+    }
+    return *this;
+}
 
 template<class T>
 Vector<T>& Vector<T>::operator=(const Vector<T> &vec) {
@@ -46,7 +69,7 @@ Vector<T>::Vector() {
 
 template<class T>
 Vector<T>::Vector(const Vector<T> &vec): size(vec.size), capacity(vec.capacity), data(new T[capacity]) {
-    for (int i = 0; i<vec.size(); i++) {
+    for (int i = 0; i<vec.size; i++) {
         data[i] = vec.data[i];
     }
 }
