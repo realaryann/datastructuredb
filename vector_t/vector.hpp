@@ -8,11 +8,14 @@ class Vector {
         int capacity;
     public:
         Vector();
+        // Rule of 3
+        Vector(const Vector<T> &vec);
+        ~Vector();
+        Vector<T>& operator=(const Vector<T> &vec);
         int Size() const;
         int Capacity() const;
         void Append(const T val);
         void Pop();
-        ~Vector();
 
         //Printing
         template<class U>
@@ -20,10 +23,32 @@ class Vector {
 };
 
 template<class T>
+Vector<T>& Vector<T>::operator=(const Vector<T> &vec) {
+    if (this != &vec) {
+        T* new_data = new T[vec.capacity];
+        for (int i = 0; i<vec.size; i++) {
+            new_data[i] = vec.data[i];
+        }
+        delete[] this->data;
+        this->data = new_data;
+        this->capacity = vec.capacity;
+        this->size = vec.size;
+    }
+    return *this;
+}
+
+template<class T>
 Vector<T>::Vector() {
     size = 0;
     capacity=20;
     data = new T[capacity];
+}
+
+template<class T>
+Vector<T>::Vector(const Vector<T> &vec): size(vec.size), capacity(vec.capacity), data(new T[capacity]) {
+    for (int i = 0; i<vec.size(); i++) {
+        data[i] = vec.data[i];
+    }
 }
 
 template<class T>
